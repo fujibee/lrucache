@@ -7,17 +7,11 @@ class LRUCache
   end 
 
   def put(key, value)
-    tmp = @cache.assoc(key)
-    if tmp
-      @cache.delete(tmp)
-      tmp[1] = value
-      @cache << tmp
-    else
-      @cache << [key, value]
-    end
+    delete_if_exist(key)
+    @cache << [key, value]
     wipeout
   end 
-
+  
   def get(key)
     reorder(key)
     value = @cache.assoc(key)
@@ -34,5 +28,10 @@ class LRUCache
 
   def wipeout
     @cache.shift if max < @cache.size
+  end
+
+  def delete_if_exist(key)
+    pair = @cache.assoc(key)
+    @cache.delete(pair) if pair
   end
 end
