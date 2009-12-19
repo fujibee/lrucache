@@ -55,18 +55,30 @@ describe LRUCache do
   end
 
   it 'キャッシュサイズをあとから増やせる' do
-    @lru.put('a', 'dataA')
-    @lru.put('b', 'dataB')
+    puts_test_data(2).each {|pair| @lru.put(pair[0], pair[1])}
     @lru.cache_size_change(5)
     @lru.max.should == 5
-    @lru.put('c', 'dataC')
-    @lru.put('d', 'dataD')
-    @lru.put('e', 'dataE')
+    puts_test_data(3, 'c').each {|pair| @lru.put(pair[0], pair[1])}
     
     @lru.get('c').should == 'dataC'
     @lru.get('d').should == 'dataD'
     @lru.get('e').should == 'dataE'
     @lru.get('b').should == 'dataB'
     @lru.get('a').should == 'dataA'
+  end
+end
+
+def puts_test_data(num, start='a')
+  box = []
+  num.times do |n|
+    box << [start, "data#{start.upcase}"]
+    start = start.succ
+  end
+  box
+end
+
+describe 'test helper' do
+  it 'テストデータ作成' do
+    puts_test_data(2).should == [['a', 'dataA'], ['b', 'dataB']]
   end
 end
