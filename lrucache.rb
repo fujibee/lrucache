@@ -1,39 +1,31 @@
 class LRUCache
   attr_reader :max
 
-  def initialize(a)
-    @max = a 
-    @cache = {}
-    @order = []
+  def initialize(max)
+    @max = max 
+    @cache = []
   end 
 
-  def put(a, b)
-    @cache[a] = b
-    @order << a
+  def put(key, value)
+    @cache << [key, value]
     wipeout
   end 
 
-  def get(a)
-    reorder(a)
-    @cache[a]
+  def get(key)
+    reorder(key)
+    value = @cache.assoc(key)
+    value.nil? ? nil : value.last
   end 
-
-  def size
-    @cache.size
-  end 
-
-  def index(a)
-    @order.index(a)
-  end
 
   private
 
-  def reorder(a)
-    @order.delete(a)
-    @order << a
+  def reorder(key)
+    value = @cache.assoc(key)
+    @cache.delete(value)
+    @cache << value
   end
 
   def wipeout
-    @cache.delete(@order.first) if max < size
+    @cache.shift if max < @cache.size
   end
 end
