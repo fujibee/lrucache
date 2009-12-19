@@ -7,7 +7,14 @@ class LRUCache
   end 
 
   def put(key, value)
-    @cache << [key, value]
+    tmp = @cache.assoc(key)
+    if tmp
+      @cache.delete(tmp)
+      tmp[1] = value
+      @cache << tmp
+    else
+      @cache << [key, value]
+    end
     wipeout
   end 
 

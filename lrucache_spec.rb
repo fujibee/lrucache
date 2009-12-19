@@ -30,4 +30,12 @@ describe LRUCache do
     @lru.put('c', 'dataC')
     @lru.get('b').should be_nil
   end
+
+  it '重複したキーは上書きされる' do
+    @lru.put('a', 'dataA')
+    @lru.put('b', 'dataB')
+    @lru.put('b', 'dataBB')
+    @lru.get('a').should == 'dataA'
+    @lru.get('b').should == 'dataBB'
+  end
 end
