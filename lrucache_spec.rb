@@ -26,14 +26,14 @@ describe LRUCache do
     @lru.put('a', 'dataA')
     @lru.put('b', 'dataB')
     @lru.put('c', 'dataC')
-    @lru.index('b').should == 2
-    @lru.index('c').should == 3
+    @lru.index('b').should == 1
+    @lru.index('c').should == 2
   end 
 
   it '値を追加したらデータの最後に追加される' do
     @lru.put('a', 'dataA')
     @lru.put('b', 'dataB')
-    @lru.index('b').should == @lru.size
+    @lru.index('b').should == @lru.size - 1
   end 
   
   it '一つも使われていない場合は最初に追加したものから消える' do

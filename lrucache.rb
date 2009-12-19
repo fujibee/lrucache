@@ -23,7 +23,7 @@ class LRUCache
   end 
 
   def index(a)
-    @order.index(a) + 1
+    @order.index(a)
   end
 
   private
