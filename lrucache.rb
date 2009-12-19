@@ -18,6 +18,13 @@ class LRUCache
     value.nil? ? nil : value.last
   end 
 
+  def cache_size_change(max)
+    (@max - max).times do
+      @cache.shift
+    end
+    @max = max
+  end
+
   private
 
   def reorder(key)

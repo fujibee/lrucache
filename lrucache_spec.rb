@@ -38,4 +38,19 @@ describe LRUCache do
     @lru.get('a').should == 'dataA'
     @lru.get('b').should == 'dataBB'
   end
+
+  it 'キャッシュサイズをあとから減らせる' do
+    lru = LRUCache.new(5)
+    lru.put('a', 'dataA')
+    lru.put('b', 'dataB')
+    lru.put('c', 'dataC')
+    lru.put('d', 'dataD')
+    lru.put('e', 'dataE')
+    lru.cache_size_change(3)
+    lru.get('e').should == 'dataE'
+    lru.get('d').should == 'dataD'
+    lru.get('c').should == 'dataC'
+    lru.get('b').should be_nil
+    lru.get('a').should be_nil
+  end
 end
