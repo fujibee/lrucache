@@ -26,16 +26,17 @@ describe LRUCache do
     @lru.put('a', 'dataA')
     @lru.put('b', 'dataB')
     @lru.put('c', 'dataC')
-    @lru.index('b').shuold == 2
+    @lru.index('b').should == 2
+    @lru.index('c').should == 3
   end 
 
   it '値を追加したらデータの最後に追加される' do
     @lru.put('a', 'dataA')
-    @lru.index('a').shuold == @lru.size
+    @lru.put('b', 'dataB')
+    @lru.index('b').should == @lru.size
   end 
   
   it '一つも使われていない場合は最初に追加したものから消える' do
-    pending
     @lru.put('a', 'dataA')
     @lru.put('b', 'dataB')
     @lru.put('c', 'dataC')
@@ -43,7 +44,6 @@ describe LRUCache do
   end 
 
   it 'getされたら使われたとみなす' do
-    pending
     @lru.put('a', 'dataA')
     @lru.put('b', 'dataB')
     @lru.get('a').should == 'dataA'
