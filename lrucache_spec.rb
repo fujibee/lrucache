@@ -53,4 +53,20 @@ describe LRUCache do
     lru.get('b').should be_nil
     lru.get('a').should be_nil
   end
+
+  it 'キャッシュサイズをあとから増やせる' do
+    @lru.put('a', 'dataA')
+    @lru.put('b', 'dataB')
+    @lru.cache_size_change(5)
+    @lru.max.should == 5
+    @lru.put('c', 'dataC')
+    @lru.put('d', 'dataD')
+    @lru.put('e', 'dataE')
+    
+    @lru.get('c').should == 'dataC'
+    @lru.get('d').should == 'dataD'
+    @lru.get('e').should == 'dataE'
+    @lru.get('b').should == 'dataB'
+    @lru.get('a').should == 'dataA'
+  end
 end

@@ -19,9 +19,8 @@ class LRUCache
   end 
 
   def cache_size_change(max)
-    (@max - max).times do
-      @cache.shift
-    end
+    diff = @max - max
+    diff.times { @cache.shift } if diff > 0
     @max = max
   end
 
@@ -34,7 +33,7 @@ class LRUCache
   end
 
   def wipeout
-    @cache.shift if max < @cache.size
+    @cache.shift if @max < @cache.size
   end
 
   def delete_if_exist(key)
